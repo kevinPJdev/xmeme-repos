@@ -5,16 +5,24 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "joi": "^17.3.0",
     "pg": "^8.5.1"
   },
+  "engines": {
+    "node": "14.15.3",
+    "npm": "6.14.9"
+  },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "heroku-postbuild":"cd x-meme_frontend && npm install &&npm run build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "heroku-run-build-script": true
 }

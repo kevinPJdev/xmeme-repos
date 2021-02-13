@@ -1,26 +1,29 @@
 import Joi from 'joi';
 import express from 'express';
 import { createRequire } from 'module';
+import cors from 'cors';
 const require = createRequire(import.meta.url);
 const { Client } = require('pg');
+import path from 'path';
+import pool from './db.js';
 
+const port= process.env.PORT||8081;
+
+//middleware
 const app= express();
 app.use(express.json());
+app.use(cors());
 
-//Connecting to Postgres DB
-const connectionString = 'postgres://postgres:postgres@localhost:5432/x-meme_DB';
-
-const client = new Client({
-  connectionString:connectionString
-});
-
-client.connect();
+if(process.env.NODE_ENV === "production") {
+  //serve static content
+  app.use(express.static(path.join(__dirname,"x-meme_frontend/build")));
+}
 
 //Retreive all the memes
-app.get('/api/memes', (req,res) => {
-    client.query('SELECT * from meme_dtls',
+app.get('/memes', (req,res) => {
+    pool.query('SELECT * from meme_dtls',
     function(err,result) {
-      if(err || results.length == 0) {
+      if(err) {
         console.log(err);
         res.status(400).send("No Memes to display");
       }else {
@@ -29,9 +32,9 @@ app.get('/api/memes', (req,res) => {
 });
 
 //Retrieve meme with id from DB
-app.get('/api/memes/:id',(req,res) => {
+app.get('/memes/:id',(req,res) => {
   const id = req.params.id;
-  client.query('SELECT * from meme_dtls where id=$1',[id], function(err,results) {
+  pool.query('SELECT * from meme_dtls where id=$1',[id], function(err,results) {
     if(results.length>0) {res.status(200).send(results.rows);}
     else {
       res.status(404).send("Meme was not found");
@@ -40,7 +43,7 @@ app.get('/api/memes/:id',(req,res) => {
 });
 
 //Post a meme to DB
-app.post('/api/memes', (req,res) => {
+app.post('/memes', (req,res) => {
   //Validate if input is acceptable else return status 400
   //const err = validateInput(req.body);
   //if(err) {return res.status(400)}
@@ -50,7 +53,7 @@ app.post('/api/memes', (req,res) => {
     caption:req.body.caption,
     memeUrl:req.body.memeUrl
   };
-  client.query('INSERT INTO meme_dtls(username,caption,url) values($1,$2,$3)',
+  pool.query('INSERT INTO meme_dtls(username,caption,url) values($1,$2,$3)',
     [meme.username,meme.caption,meme.memeUrl], function(err,results) {
       if(err) {
         console.log(err);
@@ -72,6 +75,5 @@ function validateInput({username,caption,memeUrl}){
   return error;
 };
 
-const port= process.env.PORT||3080;
 app.listen(port, () => {
   console.log(`Logging to port...${port}`)});
