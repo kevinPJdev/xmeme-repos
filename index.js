@@ -7,7 +7,7 @@ const { Client } = require('pg');
 import pool from './db.js';
 var path = require('path');
 const port= process.env.PORT||8081;
-
+const __dirname = path.resolve();
 //middleware
 const app= express();
 app.use(express.json());
