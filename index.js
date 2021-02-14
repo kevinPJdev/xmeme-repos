@@ -5,7 +5,7 @@ import cors from 'cors';
 const require = createRequire(import.meta.url);
 const { Client } = require('pg');
 import pool from './db.js';
-import path from 'path';
+var path = require('path');
 const port= process.env.PORT||8081;
 
 //middleware
