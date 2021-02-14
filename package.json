@@ -18,7 +18,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "heroku-postbuild": "cd x-meme_frontend && npm install && npm run build"
   },
   "keywords": [],
   "author": "",

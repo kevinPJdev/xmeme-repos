@@ -13,17 +13,9 @@ const app= express();
 app.use(express.json());
 app.use(cors());
 
-app.get('/',(req,res) => {
-  pool.query('SELECT * from meme_dtls',
-    function(err,result) {
-      if(err) {
-        console.log(err);
-        res.status(400).send("No Memes to display");
-      }else {
-      res.status(200).send(result.rows);}
-    })  
-})
-
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname,"x-meme_frontend/build")));
+}
 //Retreive all the memes
 app.get('/memes', (req,res) => {
     pool.query('SELECT * from meme_dtls',
