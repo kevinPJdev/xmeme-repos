@@ -12,8 +12,9 @@ const devConfig = {
   port: 5432
 }
 
+const connstr = process.env.DATABASE_URL.concat('?ssl=true');
 const proConfig = {
-  connectionString: process.env.DATABASE_URL
+  connectionString: connstr
 }
 
 const pool = new Pool(process.env.NODE_ENV === "production" ? proConfig : devConfig)
