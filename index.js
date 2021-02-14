@@ -4,7 +4,6 @@ import { createRequire } from 'module';
 import cors from 'cors';
 const require = createRequire(import.meta.url);
 const { Client } = require('pg');
-import path from 'path';
 import pool from './db.js';
 
 const port= process.env.PORT||8081;
