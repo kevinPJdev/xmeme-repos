@@ -5,7 +5,7 @@ import cors from 'cors';
 const require = createRequire(import.meta.url);
 const { Client } = require('pg');
 import pool from './db.js';
-var path = require('path');
+const { path } = require('path');
 const port= process.env.PORT||8081;
 const __dirname = path.resolve();
 //middleware
@@ -14,8 +14,13 @@ app.use(express.json());
 app.use(cors());
 
 if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname,"x-meme_frontend/build")));
+  app.use(express.static(path.join(__dirname,'x-meme_frontend/build')));
 }
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'x-meme_frontend', 'build', 'index.html'))
+});
+
 //Retreive all the memes
 app.get('/memes', (req,res) => {
     pool.query('SELECT * from meme_dtls',
