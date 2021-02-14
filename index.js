@@ -30,7 +30,7 @@ app.get('/memes', (req,res) => {
     function(err,result) {
       if(err) {
         console.log(err);
-        res.status(400).send("No Memes to display");
+        res.status(400).send("Zero Memes to display");
       }else {
       res.status(200).send(result.rows);}
     })   
