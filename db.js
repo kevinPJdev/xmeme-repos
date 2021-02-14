@@ -12,7 +12,7 @@ const devConfig = {
   port: 5432
 }
 
-const connstr = process.env.DATABASE_URL.concat('?ssl=true');
+const connstr = process.env.DATABASE_URL.concat('?sslmode=require');
 const proConfig = {
   connectionString: connstr
 }
