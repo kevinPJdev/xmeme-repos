@@ -1,5 +1,5 @@
 {
-  "name": "x-meme_project",
+  "name": "x-meme-project",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,7 +19,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild":"cd x-meme_frontend && npm install && npm start"
+    "heroku-postbuild":"cd x-meme_frontend && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
