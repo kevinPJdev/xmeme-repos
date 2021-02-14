@@ -8,7 +8,7 @@ const devConfig = {
   user:"postgres",
   password:"welcome123",
   host:"localhost",
-  database:"x-meme_server",
+  database:"x-meme",
   port: 5432
 }
 
