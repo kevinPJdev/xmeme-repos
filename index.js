@@ -7,7 +7,7 @@ const { Client } = require('pg');
 import pool from './db.js';
 const { path } = require('path');
 const port= process.env.PORT||8081;
-const __dirname = path.resolve();
+const __dirname = process.env.PWD;
 //middleware
 const app= express();
 app.use(express.json());
@@ -17,9 +17,6 @@ if(process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname,'x-meme_frontend/build')));
 }
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'x-meme_frontend', 'build', 'index.html'))
-});
 
 //Retreive all the memes
 app.get('/memes', (req,res) => {
@@ -79,3 +76,8 @@ function validateInput({username,caption,memeUrl}){
 
 app.listen(port, () => {
   console.log(`Logging to port...${port}`)});
+
+  
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname,'x-meme_frontend/build'));
+});
