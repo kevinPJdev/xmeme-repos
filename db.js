@@ -11,8 +11,7 @@ const devConfig = {
   database:"x-meme",
   port: 5432
 }
-
-c//onst connstr = process.env.DATABASE_URL.concat('?sslmode=require');
+//onst connstr = process.env.DATABASE_URL.concat('?sslmode=require');
 
 const proConfig = {
   connectionString: process.env.DATABASE_URL,
