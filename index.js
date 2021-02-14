@@ -14,11 +14,6 @@ const app= express();
 app.use(express.json());
 app.use(cors());
 
-if(process.env.NODE_ENV === "production") {
-  //serve static content
-  app.use(express.static(path.join(__dirname,"x-meme_frontend/build")));
-}
-
 //Retreive all the memes
 app.get('/memes', (req,res) => {
     pool.query('SELECT * from meme_dtls',
